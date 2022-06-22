@@ -9,14 +9,13 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'password', 'password2', 'picture', 'is_completed')
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'password', 'password2', 'picture')
         extra_kwargs = {
             'password': {'write_only': True},
             'email': {'required': True, 'allow_null':False},
             'username': {'required': True, 'allow_null':False},
             'first_name': {'required': True, 'allow_null':False},
             'last_name': {'required': True, 'allow_null':False},
-            'is_completed': {'read_only': True},
             }
 
     def validate(self, attrs):
@@ -37,11 +36,6 @@ class UserSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         return super().update(instance, validated_data)
 
-# class UserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ('id', 'username', 'email', 'first_name', 'last_name', 'picture', 'is_completed')
-
 class LoginUserSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField()
@@ -58,21 +52,16 @@ class UpdateUserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'password', 'password2', 'picture', 'is_completed')
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'password', 'password2', 'picture')
         extra_kwargs = {
             'password': {'write_only': True},
             'first_name': {'read_only':False},
             'last_name': {'read_only':True},
-            'is_completed': {'read_only': True},
             }
         fields = ['id',
                 'email', 'first_name',
                 'last_name', 'picture'
                 ]
-        # extra_kwargs = {
-        #     'first_name': {'read_only':False},
-        #     'last_name': {'read_only':True}
-        #     }
 
     def update(self, instance, validated_data):
         return super().update(instance, validated_data)
